@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_EXERCISES 12
+#define MAX_NAME_LENGTH 43
+
+struct Exercise {
+    char name[MAX_NAME_LENGTH];
+    int sets;  
+    int reps;
+};
+
+void addExercise(struct Exercise exercises[], int *count) {
+    if (*count >= MAX_EXERCISES) {
+        printf("You've reached the maximum number of exercises.\n");
+        return;
+    }
+
+    struct Exercise newExercise;
+    printf("Enter exercise name: ");
+    scanf("%s", newExercise.name);
+    printf("Enter number of sets: ");
+    scanf("%d", &newExercise.sets);
+    printf("Enter number of reps: ");
+    scanf("%d", &newExercise.reps);
+
+    exercises[(*count)++] = newExercise;
+    printf("Exercise added successfully!\n");
+}
+
+void displayExercises(struct Exercise exercises[], int count) {
+    printf("\nYour workout plan:\n");
+
+    for (int i = 0; i < count; i++) {
+        printf("Exercise: %s\n", exercises[i].name);
+        printf("Sets: %d\n", exercises[i].sets);
+        printf("Reps: %d\n", exercises[i].reps);
+        printf("\n");
+    }
+}
+
+int main() {
+    struct Exercise exercises[MAX_EXERCISES];
+    int exerciseCount = 0;
+    char choice;
+
+    do {
+        printf("\nMenu:\n");
+        printf("1. Add Exercise\n");
+        printf("2. Display Exercises\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf(" %c", &choice);
+
+        switch (choice) {
+            case '1':
+                addExercise(exercises, &exerciseCount);
+                break;
+            case '2':
+                displayExercises(exercises, exerciseCount);
+                break;
+            case '3':
+                printf("Exiting the workout app. Goodbye!\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (choice != '3');
+
+    return 0;
+}
